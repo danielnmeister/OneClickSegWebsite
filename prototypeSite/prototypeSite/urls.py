@@ -26,6 +26,7 @@ urlpatterns = [
     path('upload/', views.upload_view, name='upload'),
     path('gallery/', views.gallery_view, name='gallery'),
     path('annotation/<int:picture_id>/', views.annotation_view, name='annotation'),
+    path('submit', views.submit_annotation, name='submit_annotation'),
 ]
 
 if settings.DEBUG:
