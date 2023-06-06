@@ -14,10 +14,10 @@ migrate (dir: ".../prototypeSite"): python manage.py makemigrations
 migrate (dir: ".../prototypeSite"): manage.py migrate
 
 
-create admin user (dir: ".../prototypeSite/"): py manage.py createsuperuser
+create admin user (dir: ".../prototypeSite"): py manage.py createsuperuser
 
 
-clear DB (dir: ".../prototypeSite/"): python manage.py flush
+clear DB (dir: ".../prototypeSite"): python manage.py flush
 
 
 start server (dir: ".../prototypeSite"): python manage.py runserver
