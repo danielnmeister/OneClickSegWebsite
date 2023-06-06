@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Pictures</title>
+</head>
+<body>
+    <h1>Upload Pictures</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="images" multiple>
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>

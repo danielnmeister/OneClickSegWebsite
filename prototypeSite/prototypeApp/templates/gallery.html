@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+</head>
+<body>
+    <h1>Image Gallery</h1>
+    {% for picture in pictures %}
+        <div>
+            <img src="{{ picture.image.url }}" width="200" height="200">
+            <a href="{% url 'annotation' picture.id %}">Annotate</a>
+        </div>
+    {% endfor %}
+</body>
+</html>

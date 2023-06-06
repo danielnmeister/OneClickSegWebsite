@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Annotate Image</title>
+    <style>
+        .circle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: red;
+            transform: translate(-50%, -50%);
+        }
+
+        #picture {
+            max-width: 100%;
+            max-height: 400px; /* Adjust the height as per your requirement */
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<h1>Annotate Image</h1>
+<img src="{{ picture.image.url }}" id="picture">
+
+<form method="post" action="{% url 'annotation' picture.id %}">
+    {% csrf_token %}
+    <textarea name="annotation"></textarea>
+    <input type="submit" value="Save Annotation">
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const image = document.querySelector('#picture');
+        const dotSize = 10; // Adjust the size of the dot as needed
+        let dotPositions = []; // Array to store dot positions
+        let dotColor = '#FF0000'; // Default dot color (red)
+
+        const handleMouseDown = (event) => {
+            const imageRect = image.getBoundingClientRect();
+            const offsetX = event.clientX - imageRect.left;
+            const offsetY = event.clientY - imageRect.top;
+
+            // Store the dot position in the array
+            dotPositions.push({x: offsetX, y: offsetY});
+
+            const circle = document.createElement('div');
+            circle.classList.add('circle');
+            circle.style.left = `${offsetX - dotSize / 2}px`;
+            circle.style.top = `${offsetY - dotSize / 2}px`;
+            circle.style.backgroundColor = dotColor;
+            image.parentNode.appendChild(circle);
+
+            image.removeEventListener('mousedown', handleMouseDown); // Remove the event listener
+        };
+
+        image.addEventListener('mousedown', handleMouseDown);
+
+        const showPixelButton = document.createElement('button');
+        showPixelButton.textContent = 'Show Pixel Location';
+        showPixelButton.addEventListener('click', () => {
+            const dot = dotPositions[dotPositions.length - 1];
+            const x = Math.round(dot.x);
+            const y = Math.round(dot.y);
+            alert(`Clicked Location: (${x}px, ${y}px)`);
+        });
+        document.body.appendChild(showPixelButton);
+
+        const printBottomRightButton = document.createElement('button');
+        printBottomRightButton.textContent = 'Print Bottom Right Corner';
+        printBottomRightButton.addEventListener('click', () => {
+            const x = image.offsetWidth;
+            const y = image.offsetHeight;
+            alert(`Bottom Right Corner: (${x}px, ${y}px)`);
+        });
+        document.body.appendChild(printBottomRightButton);
+
+        const colorPicker = document.createElement('input');
+        colorPicker.type = 'color';
+        colorPicker.addEventListener('change', (event) => {
+            dotColor = event.target.value;
+        });
+        document.body.appendChild(colorPicker);
+
+        const clearButton = document.createElement('button');
+        clearButton.textContent = 'Clear Dot';
+        clearButton.addEventListener('click', () => {
+            // Clear dot positions array
+            dotPositions = [];
+
+            // Remove existing dot elements from the page
+            const dots = document.querySelectorAll('.circle');
+            dots.forEach((dot) => dot.remove());
+
+            // Reattach the mouse click listener
+            image.addEventListener('mousedown', handleMouseDown);
+        });
+        document.body.appendChild(clearButton);
+    });
+</script>
+</body>
+</html>
