@@ -34,14 +34,14 @@
 
 
 <div id="gallery">
-
     {% for picture in pictures %}
-        <div class="image-wrapper">
-            <img src="{{ picture.image.url }}" width="200" height="200" alt="Image">
-            <a href="{% url 'annotation' picture.id %}">Annotate</a>
-        </div>
+      <div class="image-wrapper">
+        <a href="{% url 'annotation' picture.id %}">
+          <img src="{{ picture.image.url }}" width="200" height="200" alt="Image">
+        </a>
+      </div>
     {% endfor %}
-</div>
+  </div>
 
 </body>
 </html>
