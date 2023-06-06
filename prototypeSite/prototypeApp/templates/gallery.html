@@ -1,7 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Image Gallery</title>
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <h1>Image Gallery</h1>
+
+
+        <div id="gallery">
+            {% for picture in pictures %}
+                <div class="image-wrapper">
+                    <a href="{% url 'annotation' picture.id %}">
+                        <img src="{{ picture.image.url }}" width="200" height="200" alt="Image">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
 
     <style>
         body {
@@ -27,21 +41,6 @@
             height: auto;
         }
     </style>
-
-</head>
-<body>
-<h1>Image Gallery</h1>
+{% endblock %}
 
 
-<div id="gallery">
-    {% for picture in pictures %}
-      <div class="image-wrapper">
-        <a href="{% url 'annotation' picture.id %}">
-          <img src="{{ picture.image.url }}" width="200" height="200" alt="Image">
-        </a>
-      </div>
-    {% endfor %}
-  </div>
-
-</body>
-</html>
