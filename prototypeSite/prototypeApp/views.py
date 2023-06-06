@@ -44,3 +44,7 @@ def submit_annotation(request):
 
     # Return an error response if the request method is not POST
     return HttpResponse('Invalid request method.')
+
+
+def base(request):
+    return render(request, 'base.html')
