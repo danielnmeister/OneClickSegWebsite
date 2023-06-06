@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .models import Picture
@@ -25,3 +26,25 @@ def annotation_view(request, picture_id):
         picture.save()
         return redirect('gallery')
     return render(request, 'annotation.html', {'picture': picture})
+
+
+def submit_annotation(request):
+    if request.method == 'POST':
+        dot_positions = request.POST.get('dotPositions')
+        user_text = request.POST.get('userText')
+
+        print('Dot Positions:', dot_positions)
+        print('User Text:', user_text)
+
+        # Process the dot positions and user text as needed
+        # For example, you can save them to the database or perform further calculations
+
+        # Return a response indicating the submission was successful
+        return HttpResponse('Annotation submitted successfully.')
+
+    # Return an error response if the request method is not POST
+    return HttpResponse('Invalid request method.')
+
+
+def base(request):
+    return render(request, 'base.html')
